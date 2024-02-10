@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { type ReactNode } from "react";
+import { ActiveLink } from "@/ui/atoms/ActiveLink";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,11 +14,30 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<nav>
+					<ul className="mx-auto flex justify-center space-x-4 p-2">
+						<li>
+							<ActiveLink href="/">Homepage</ActiveLink>
+						</li>
+						<li>
+							<ActiveLink href="/products">Products</ActiveLink>
+						</li>
+					</ul>
+				</nav>
+				<section className="mx-auto max-w-2xl px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+					{children}
+				</section>
+				<footer>
+					<p className="text-center text-sm text-gray-500">
+						&copy; {new Date().getFullYear()} Kurs. All rights reserved.
+					</p>
+				</footer>
+			</body>
 		</html>
 	);
 }
