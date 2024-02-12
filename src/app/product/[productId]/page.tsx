@@ -12,22 +12,23 @@ import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
 // 	}));
 // };
 
-export const generateMetadata = async ({
+export async function generateMetadata({
 	params,
 }: {
 	params: { productId: string };
-}): Promise<Metadata> => {
+}): Promise<Metadata> {
 	const { name, description, coverImage } = await getProductById(params.productId);
+
 	return {
-		title: `${name} - Sklep internetowy`,
+		title: name,
 		description,
 		openGraph: {
-			title: `${name} - Sklep internetowy`,
+			title: name,
 			description,
 			images: [coverImage.src],
 		},
 	};
-};
+}
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
