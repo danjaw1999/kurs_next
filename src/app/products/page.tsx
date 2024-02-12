@@ -1,32 +1,31 @@
-import { ProductList } from "@/ui/organisms/ProductList/ProductList";
+import { ProductList } from "@/ui/organisms/ProductList";
+import { getProducts } from "@/api/products";
+import { amountOfProducts } from "@/utils";
 
-const products = [
-	{
-		category: "Akcesoria",
-		name: "Bluza",
-		price: 2137,
-		coverImage: { src: "/product_1.png", alt: "Bluza" },
-	},
-	{
-		category: "Akcesoria",
-		name: "Kubek",
-		price: 2137,
-		coverImage: { src: "/product_2.png", alt: "Kubek" },
-	},
-	{
-		category: "Akcesoria",
-		name: "Kurtka",
-		price: 2137,
-		coverImage: { src: "/product_3.png", alt: "Kurtka" },
-	},
-	{
-		category: "Akcesoria",
-		name: "Czapka",
-		price: 2137,
-		coverImage: { src: "/product_4.png", alt: "Czapka" },
-	},
-];
+export type ProductResponseItem = {
+	id: string;
+	title: string;
+	price: number;
+	description: string;
+	category: string;
+	image: string;
+	rating: Rating;
+};
+
+export type Rating = {
+	rate: number;
+	count: number;
+};
 
 export default async function Page() {
-	return <ProductList products={products} />;
+	const products = await getProducts({
+		skip: undefined,
+		take: amountOfProducts,
+	});
+
+	return (
+		<>
+			<ProductList products={products} />
+		</>
+	);
 }

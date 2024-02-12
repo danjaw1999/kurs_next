@@ -8,7 +8,7 @@ export const ProductList = ({ products }: { products: ProductItem[] }) => {
 			data-testid="products-list"
 		>
 			{products.map((product) => (
-				<ProductListItem key={product.name} product={product} />
+				<ProductListItem key={product.id} product={product} />
 			))}
 		</ul>
 	);

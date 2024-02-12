@@ -19,24 +19,30 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<nav>
-					<ul className="mx-auto flex justify-center space-x-4 p-2">
-						<li>
-							<ActiveLink href="/">Homepage</ActiveLink>
-						</li>
-						<li>
-							<ActiveLink href="/products">Products</ActiveLink>
-						</li>
-					</ul>
-				</nav>
-				<section className="mx-auto max-w-2xl px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
-					{children}
-				</section>
-				<footer>
-					<p className="text-center text-sm text-gray-500">
-						&copy; {new Date().getFullYear()} Kurs. All rights reserved.
-					</p>
-				</footer>
+				<div className="flex min-h-screen flex-col">
+					<nav>
+						<ul className="mx-auto flex justify-center space-x-4 p-2">
+							<li>
+								<ActiveLink exact activeClassName="underline" href="/">
+									Homepage
+								</ActiveLink>
+							</li>
+							<li>
+								<ActiveLink activeClassName="underline" href="/products">
+									Products
+								</ActiveLink>
+							</li>
+						</ul>
+					</nav>
+					<section className="mx-auto max-w-2xl grow px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+						{children}
+					</section>
+					<footer>
+						<p className="text-center text-sm text-gray-500">
+							&copy; {new Date().getFullYear()} Kurs. All rights reserved.
+						</p>
+					</footer>
+				</div>
 			</body>
 		</html>
 	);

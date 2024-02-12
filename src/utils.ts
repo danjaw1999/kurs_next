@@ -4,3 +4,5 @@ export const formatPrice = (price: number) => {
 		currency: "USD",
 	}).format(price);
 };
+
+export const amountOfProducts = 20;
