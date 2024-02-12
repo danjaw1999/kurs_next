@@ -24,12 +24,12 @@ export default function RootLayout({
 						<ul className="mx-auto flex justify-center space-x-4 p-2">
 							<li>
 								<ActiveLink exact activeClassName="underline" href="/">
-									Homepage
+									Home
 								</ActiveLink>
 							</li>
 							<li>
 								<ActiveLink activeClassName="underline" href="/products">
-									Products
+									All
 								</ActiveLink>
 							</li>
 						</ul>
