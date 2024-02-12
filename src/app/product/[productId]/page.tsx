@@ -39,7 +39,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 				<ProductListItemDescription product={product} />
 			</article>
 			<aside>
-				<Suspense fallback={"Loading..."}>{<SuggestedProductsList />}</Suspense>
+				<Suspense>{<SuggestedProductsList />}</Suspense>
 			</aside>
 		</>
 	);
