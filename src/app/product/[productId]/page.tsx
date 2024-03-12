@@ -29,24 +29,10 @@ export async function generateMetadata({
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
-<<<<<<< Updated upstream
-	return (
-		<>
-			<article className="max-w-xs">
-				<ProductCoverImage {...product.coverImage} />
-				<ProductListItemDescription product={product} />
-			</article>
-			<aside>
-				<Suspense fallback="Loading ...">{<SuggestedProductsList />}</Suspense>
-			</aside>
-		</>
-	);
-=======
 	const reviews = await getProductReviews({ productId: params.productId });
 
 	if (!product) {
 		notFound();
 	}
 	return <ProductPage product={product} reviews={reviews} />;
->>>>>>> Stashed changes
 }
