@@ -1,0 +1,19 @@
+mutation CartCreate {
+    createCart {
+        id
+        products {
+            id
+            image
+            name
+            price
+            quantity
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+    }
+}

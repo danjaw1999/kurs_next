@@ -1,0 +1,8 @@
+query ProductsGetByCategory($slug: String!, $skip: Int, $take: Int) {
+    productsByCategory(slug: $slug, skip: $skip, take: $take) {
+        products {
+            ...ProductListItem
+        }
+        totalCount
+    }
+}

@@ -1,10 +1,19 @@
-import { ProductList } from "@/ui/organisms/ProductList";
-import { getProducts } from "@/api/products";
+import { getProductsByCategory } from "@/api/products";
+import { getCategories } from "@/api/categories";
+import { ProductListSuggested } from "@/ui/organisms/ProductListSuggested";
 
-// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+export const SuggestedProductsList = async () => {
+	const categories = await getCategories();
+	const randomCategory = categories[Math.floor(Math.random() * categories.length)];
 
-export const SuggestedProductsList = async ({}) => {
-	const products = await getProducts();
-	// await sleep(5000);
-	return <ProductList products={products.slice(-4)} />;
+	const { products } = await getProductsByCategory({
+		take: 4,
+		slug: randomCategory?.slug ?? "accessories",
+	});
+
+	return (
+		<div data-testid="related-products">
+			<ProductListSuggested products={products.slice(0, 4)} />
+		</div>
+	);
 };

@@ -1,0 +1,22 @@
+query OrderGet($orderId: ID, $email: String) {
+    order(orderId: $orderId, email: $email) {
+        id
+        email
+        products {
+            id
+            image
+            name
+            price
+            quantity
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+        status
+        totalPrice
+    }
+}

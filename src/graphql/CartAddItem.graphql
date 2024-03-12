@@ -1,0 +1,18 @@
+mutation CartAddItem($cartId: ID!, $productId: ID!, $variantId: ID!, $quantity: Int) {
+    addToCart(cartId: $cartId, productId: $productId, variantId: $variantId, quantity: $quantity) {
+        id
+        products {
+            id
+            image
+            name
+            price
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+    }
+}

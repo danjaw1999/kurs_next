@@ -1,0 +1,6 @@
+fragment VariantItem on Variant {
+    id
+    active
+    name
+    value
+}

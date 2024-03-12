@@ -1,0 +1,10 @@
+mutation ProductAddReview($productId: ID!, $data: ReviewInput!) {
+    addReview(productId: $productId, data: $data) {
+        content
+        email
+        headline
+        id
+        rating
+        name
+    }
+}

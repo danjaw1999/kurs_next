@@ -1,0 +1,22 @@
+mutation OrderCreate($email: String!, $cartId: ID!) {
+    createOrder(email: $email, cartId: $cartId) {
+        email
+        id
+        products {
+            id
+            image
+            name
+            price
+            quantity
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+        status
+        totalPrice
+    }
+}

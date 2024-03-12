@@ -1,0 +1,6 @@
+fragment ProductPage on Product {
+    ...ProductListItem
+    variants {
+        ...VariantItem
+    }
+}

@@ -1,0 +1,8 @@
+query ProductsGetList($skip: Int, $take: Int, $sortBy: String) {
+  products(skip: $skip, take: $take, sortBy: $sortBy) {
+    products {
+      ...ProductListItem
+    }
+    totalCount
+  }
+}

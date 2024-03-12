@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { type ComponentProps } from "react";
 
 type ActiveLinkProps = ComponentProps<typeof Link> & {
-	activeClassName: string;
+	activeClassName?: string;
 	exact?: boolean;
 };
 

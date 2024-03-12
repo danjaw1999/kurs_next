@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { type ReactNode } from "react";
-import { ActiveLink } from "@/ui/atoms/ActiveLink";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Navbar } from "@/ui/atoms/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,37 +14,29 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
+	modal,
 }: Readonly<{
 	children: ReactNode;
+	modal: ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={inter.className}>
-				<div className="flex min-h-screen flex-col">
-					<nav>
-						<ul className="mx-auto flex justify-center space-x-4 p-2">
-							<li>
-								<ActiveLink exact activeClassName="underline" href="/">
-									Home
-								</ActiveLink>
-							</li>
-							<li>
-								<ActiveLink activeClassName="underline" href="/products">
-									All
-								</ActiveLink>
-							</li>
-						</ul>
-					</nav>
-					<section className="mx-auto max-w-2xl grow px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
-						{children}
-					</section>
-					<footer>
-						<p className="text-center text-sm text-gray-500">
-							&copy; {new Date().getFullYear()} Kurs. All rights reserved.
-						</p>
-					</footer>
-				</div>
-			</body>
-		</html>
+		<ClerkProvider>
+			<html lang="en">
+				<body className={inter.className}>
+					<div className="flex min-h-screen flex-col">
+						<Navbar />
+						<section className="mx-auto max-w-2xl grow px-8 py-12 sm:px-6 sm:py-16 md:max-w-4xl lg:max-w-7xl">
+							{children}
+						</section>
+						<footer>
+							<p className="text-center text-sm text-gray-500">
+								&copy; {new Date().getFullYear()} Kurs. All rights reserved.
+							</p>
+						</footer>
+						{modal}
+					</div>
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }

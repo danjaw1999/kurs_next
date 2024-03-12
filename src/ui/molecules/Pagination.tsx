@@ -1,9 +1,8 @@
 import { PaginationBtn } from "@/ui/atoms/PaginationBtn";
-import { type ProductItem } from "@/ui/types";
 import { amountOfProducts } from "@/utils";
 
-export const Pagination = ({ products }: { products: ProductItem[] }) => {
-	const numOfPages = Math.ceil(products.length / amountOfProducts);
+export const Pagination = ({ totalCount }: { totalCount: number }) => {
+	const numOfPages = Math.ceil(totalCount / amountOfProducts);
 
 	return (
 		<nav>

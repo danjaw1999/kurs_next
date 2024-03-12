@@ -1,0 +1,8 @@
+query CollectionsGet($skip: Int, $take: Int) {
+    collections(skip: $skip, take: $take) {
+        ...CollectionItem
+        products {
+            ...ProductListItem
+        }
+    }
+}

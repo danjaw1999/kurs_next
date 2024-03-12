@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import { type Metadata } from "next";
-import { getProductById } from "@/api/products";
-import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
-import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductsList";
+import { notFound } from "next/navigation";
+import { getProductById, getProductReviews } from "@/api/products";
+import { ProductPage } from "@/ui/organisms/ProductPage";
 
 // export const generateStaticParams = async () => {
 // 	const products = await getProducts();
@@ -17,21 +15,21 @@ export async function generateMetadata({
 }: {
 	params: { productId: string };
 }): Promise<Metadata> {
-	const { name, description, coverImage } = await getProductById(params.productId);
+	const product = await getProductById(params.productId);
+	if (!product) {
+		notFound();
+	}
+	const { name, description } = product;
 
 	return {
 		title: name,
 		description,
-		openGraph: {
-			title: name,
-			description,
-			images: [coverImage.src],
-		},
 	};
 }
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
+<<<<<<< Updated upstream
 	return (
 		<>
 			<article className="max-w-xs">
@@ -43,4 +41,12 @@ export default async function SingleProductPage({ params }: { params: { productI
 			</aside>
 		</>
 	);
+=======
+	const reviews = await getProductReviews({ productId: params.productId });
+
+	if (!product) {
+		notFound();
+	}
+	return <ProductPage product={product} reviews={reviews} />;
+>>>>>>> Stashed changes
 }

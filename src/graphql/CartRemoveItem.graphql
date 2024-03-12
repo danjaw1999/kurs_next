@@ -1,0 +1,18 @@
+mutation CartRemoveItem($cartId: ID!, $productId: ID!, $variantId: ID!) {
+    removeFromCart(cartId: $cartId, productId: $productId, variantId: $variantId) {
+        id
+        products {
+            id
+            image
+            name
+            price
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+    }
+}

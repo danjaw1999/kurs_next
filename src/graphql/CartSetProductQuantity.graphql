@@ -1,0 +1,19 @@
+mutation CartSetProductQuantity ($cartId: ID!, $productId: ID!, $quantity: Int!) {
+    changeItemQuantity(cartId: $cartId, productId: $productId, quantity: $quantity) {
+        id
+        products {
+            id
+            image
+            name
+            price
+            quantity
+            description
+            category {
+                ...CategoryItem
+            }
+            variant {
+                ...VariantItem
+            }
+        }
+    }
+}

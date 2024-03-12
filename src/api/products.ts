@@ -1,40 +1,85 @@
-import { type ProductResponseItem } from "@/app/products/page";
 import { amountOfProducts } from "@/utils";
+import {
+	ProductsGetListDocument,
+	ProductGetDocument,
+	ProductsGetByCategoryDocument,
+	type ProductListItemFragment,
+	type ProductPageFragment,
+	ProductReviewsGetDocument,
+} from "@/gql/graphql";
+import { executeGraphql } from "@/api/graphqlApi";
 
-type ProductFetchOptions = {
+export type ListFetchOptions = {
 	take?: number;
 	skip?: number;
+	sortBy?: "priceAsc" | "priceDesc" | "rating";
 };
 
-export const getProducts = async ({ take = amountOfProducts, skip }: ProductFetchOptions = {}) => {
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products?${take ? `take=${take}` : ""}${skip ? `&offset=${skip}` : ""}`,
-	);
-	const productsResponse = (await res.json()) as ProductResponseItem[];
-	return productsResponse.map(productResponseItemToProductItem);
+type ProductsWithTotalCount = {
+	products: ProductListItemFragment[];
+	totalCount: number;
 };
 
-export const getProductById = async (id: ProductResponseItem["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
-	const productResponse = (await res.json()) as ProductResponseItem;
-	return productResponseItemToProductItem(productResponse);
+type ProductsByCategoryVar = ListFetchOptions & {
+	slug: string;
 };
 
-const productResponseItemToProductItem = ({
-	id,
-	title,
-	category,
-	price,
-	image,
-	description,
-}: ProductResponseItem) => ({
-	id,
-	name: title,
-	category,
-	description,
-	price,
-	coverImage: {
-		src: image,
-		alt: title,
-	},
-});
+export const getProducts = async ({
+	skip,
+	take = amountOfProducts,
+	sortBy,
+}: ListFetchOptions = {}): Promise<ProductsWithTotalCount> => {
+	const { products } = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: { take, skip, sortBy },
+		next: {
+			revalidate: 15,
+		},
+	});
+	const { products: productsItems, totalCount } = products as ProductsWithTotalCount;
+
+	return { products: productsItems, totalCount };
+};
+
+export const getProductById = async (
+	productId: ProductListItemFragment["id"],
+): Promise<ProductPageFragment | null | undefined> => {
+	const { product } = await executeGraphql({
+		query: ProductGetDocument,
+		variables: {
+			productId,
+		},
+		next: {
+			revalidate: 1,
+		},
+	});
+	return product;
+};
+
+export const getProductsByCategory = async ({
+	take,
+	skip,
+	slug,
+}: ProductsByCategoryVar): Promise<ProductsWithTotalCount> => {
+	const { productsByCategory } = await executeGraphql({
+		query: ProductsGetByCategoryDocument,
+		variables: {
+			slug,
+			take,
+			skip,
+		},
+	});
+	const { totalCount, products } = productsByCategory as ProductsWithTotalCount;
+
+	return { products, totalCount };
+};
+
+export const getProductReviews = async ({ productId }: { productId: string }) => {
+	const { reviews } = await executeGraphql({
+		query: ProductReviewsGetDocument,
+		variables: {
+			productId,
+		},
+	});
+	return reviews;
+};

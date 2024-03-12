@@ -1,0 +1,8 @@
+query ProductGet($productId: ID!) {
+  product(id: $productId) {
+    ...ProductListItem
+    variants {
+      ...VariantItem
+    }
+  }
+}

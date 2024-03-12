@@ -5,4 +5,4 @@ export const formatPrice = (price: number) => {
 	}).format(price);
 };
 
-export const amountOfProducts = 20;
+export const amountOfProducts = 5;

@@ -1,0 +1,7 @@
+query SearchQuery($slug: String!) {
+    searchQuery(slug: $slug) {
+        products {
+            ...ProductListItem
+        }
+    }
+}
