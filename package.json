@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 9949",
+    "start": "next start",
     "lint": "next lint --fix --dir src",
     "codegen": "graphql-codegen --config .graphqlrc.ts",
     "codegenWatch": "graphql-codegen --config .graphqlrc.ts --watch"
